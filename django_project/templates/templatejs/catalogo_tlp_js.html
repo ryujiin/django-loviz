@@ -2,10 +2,14 @@
 
 <script id="page_catalogo_template" type="text/template">
 	<section class="imagen_categoria">
+		{%if imagen%}
+		<img src="{{imagen}}">
+		{%endif%}
 	</section>
 	<div class="catalogo container-fluid">		
 		<div class="nav-breadcrumb">
 		</div>
+		<h2>{{nombre}}</h2>
 		<button class="btn btn-default refinar">Refinar por</button>
 		<div class="row">			
 			<div class="section-refinamiento col-sm-3 ">

@@ -19,15 +19,32 @@ class Bloque(models.Model):
 	estilo = models.CharField(max_length=100,blank=True)
 	cuerpo = models.TextField(blank=True)
 	template = models.CharField(max_length=100,blank=True,null=True)
+	activo = models.BooleanField(default=True)
 
 	def __unicode__(self):
 		return "%s de %s " %(self.titulo,self.page)
+
+class Carrusel(models.Model):
+	TIPO = (
+		('imagenes','Imagenes'),
+		('productos','Productos'),
+	)
+	titulo = models.CharField(max_length=100,blank=True)
+	page = models.ForeignKey(Pagina,blank=True,null=True,related_name='carruseles')	
+	seccion = models.CharField(max_length=100,blank=True,help_text='El id donde se colocara')
+	estilo = models.CharField(max_length=100,blank=True)	
+	activo = models.BooleanField(default=True)
+	template = models.CharField(max_length=100,blank=True,null=True)
+	tipo = models.CharField(max_length=100,choices=TIPO)
+	num_mostrar = models.PositiveIntegerField(default=1)
+	navegacion = models.BooleanField(default=True)
+	items = models.PositiveIntegerField(default=1)
 
 class ImageCarrusel(models.Model):
 	titulo = models.CharField(max_length=100,blank=True,help_text='Titulo que tendra la imagen en el Alt')
 	estilo = models.CharField(max_length=100,blank=True)
 	link = models.CharField(max_length=100,blank=True)
-	bloque = models.ForeignKey(Bloque,blank=True,related_name='imagenes_carrusel')
+	carrusel = models.ForeignKey(Carrusel,blank=True,related_name='imagenes_carrusel')
 	orden = models.PositiveIntegerField(default=0)
 	imagen = models.ImageField(upload_to='bloque/carrusel')
 

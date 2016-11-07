@@ -44,10 +44,12 @@ require.config({
 
 require([
     'backbone',
-    '../js/views/app'    
-], function (Backbone,App) {
+    '../js/views/app',
+    '../js/routers/rutas',
+], function (Backbone,App,Rutas) {
     
     var app = new App();
+    
     Backbone.history.start({
         pushState:true,
     });

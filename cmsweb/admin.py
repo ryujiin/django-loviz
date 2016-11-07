@@ -5,9 +5,10 @@ from models import *
 class ImageCarruselInline(admin.TabularInline):
 	model = ImageCarrusel
 
-class BloqueAdmin(admin.ModelAdmin):
+class CarruselAdmin(admin.ModelAdmin):
 	inlines = [ImageCarruselInline,]
 
 admin.site.register(Pagina)
-admin.site.register(Bloque,BloqueAdmin)
+admin.site.register(Bloque)
+admin.site.register(Carrusel,CarruselAdmin)
 admin.site.register(ImageCarrusel)

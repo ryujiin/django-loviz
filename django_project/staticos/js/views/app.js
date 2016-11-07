@@ -13,6 +13,7 @@ define([
         el:$('body'),
         className: '',
         events: {
+            'click .link' : 'navegar',
             'click .menu-mobil-icono': 'mostrar_navegador_mobil',
         },
 
@@ -32,6 +33,13 @@ define([
                 el:$('#suscribirse'),
                 model:new ModelSuscrito(),
             })
+        },
+        navegar:function(e){
+            e.preventDefault();
+            var link = e.currentTarget.pathname;
+            Backbone.history.navigate(link, {trigger:true});
+            $('#navigation').removeClass('is_activo');
+            $('body').animate({scrollTop:0}, 'slow');
         },
     });
 

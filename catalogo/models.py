@@ -19,11 +19,8 @@ class Producto(models.Model):
 	categorias = models.ManyToManyField('Categoria',blank=True,related_name='categorias_producto')
 	activo = models.BooleanField(default=True)
 	descripcion = models.TextField(blank=True,null=True)
-	detalles = models.TextField(blank=True,null=True)
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
-	is_ofert = models.BooleanField(default=False)
-	is_nuevo = models.BooleanField(default=False)
 	video = models.CharField(max_length=120, blank=True,null=True)
 
 	def __unicode__(self):
@@ -158,6 +155,14 @@ class ProductoImagen(models.Model):
 	actualizado = models.DateTimeField(auto_now=True)
 	class Meta:
 		ordering = ["orden"]
+
+	def save(self, *args, **kwargs):
+		orden_anterior = ProductoImagen.objects.filter(producto=self.producto).order_by('-orden')
+		if orden_anterior:
+			self.orden=orden_anterior[0].orden+1
+		else:
+			self.orden=0
+		super(ProductoImagen, self).save(*args, **kwargs)
 
 	def get_thum_medium(self):
 		img = get_thumbnail(self.foto, '740x600', quality=80)
