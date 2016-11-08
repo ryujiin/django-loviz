@@ -46,7 +46,8 @@ require([
     'backbone',
     '../js/views/app',
     '../js/routers/rutas',
-], function (Backbone,App,Rutas) {
+    '../js/views/cms/head'
+], function (Backbone,App,Rutas,Header) {
     
     var app = new App();
     

@@ -6,24 +6,16 @@
 		<img src="{{imagen}}">
 		{%endif%}
 	</section>
-	<div class="catalogo container-fluid">		
+	<div class="catalogo container">		
 		<div class="nav-breadcrumb">
 		</div>
-		<h2>{{nombre}}</h2>
-		<button class="btn btn-default refinar">Refinar por</button>
-		<div class="row">			
-			<div class="section-refinamiento col-sm-3 ">
-				<aside class="js-panel from-right">
-			      <div id="refinamientoCategoria" class="refinement Categoria"></div>
-			      <div class="refinement Color">
-			      </div>
-			    </aside>
+		<div class="row">
+			<div class="col-md-2">
+				<h1 class="titulo"><small>{{padre}}</small>{{nombre}}</h1>
 			</div>
-			<div class="section-main search-result-wrapper col-sm-9">
-				<div class="titulo-categoria text-center">
-			    </div>			    
-			 	<div class="resultados lista-productos row"></div>	
-			</div>
+			<div class="col-md-10"></div>
+		</div>		
+		<div class="catalogo_productos lista-productos row">
 		</div>
 	</div>
 	

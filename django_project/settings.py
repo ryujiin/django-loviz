@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'sorl.thumbnail',
     'social.apps.django_app.default',
+    'haystack',
     #'paypal_express_checkout',
     'paypal.standard.ipn',
     'corsheaders',
@@ -224,6 +225,14 @@ SENDGRID_API_KEY = config.SENDGRID_API_KEY
 #Cros over Cambiarlo en el server
 CORS_ORIGIN_ALLOW_ALL = True
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+        # ...or for multicore...
+        # 'URL': 'http://127.0.0.1:8983/solr/mysite',
+    },
+}
 
 try:
     from .local import *

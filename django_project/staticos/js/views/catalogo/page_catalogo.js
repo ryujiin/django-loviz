@@ -7,8 +7,11 @@ define([
     'underscore',
     'backbone',
     'swig',
-    '../../collections/categorias',    
-], function ($, _, Backbone, swig,CategoriaCollection) {
+    '../../collections/categorias',
+    '../../views/catalogo/catalogo',
+    '../../views/cms/breadcrumb',
+    'headModel'
+], function ($, _, Backbone, swig,CategoriaCollection,CatalogoView,BreadcumbView,HeadModel) {
     'use strict';
 
     var PageCatalogoView = Backbone.View.extend({
@@ -23,13 +26,19 @@ define([
 
         collection: new CategoriaCollection(),
 
-        events: {            
+        events: {
         },
 
         initialize: function () {
         },
         render:function () {
             this.$el.html(this.template(this.model.toJSON()));
+            this.crear_catalogo();
+            this.crear_breadcrum();
+            HeadModel.set({
+                titulo:this.model.toJSON().titulo_seo,
+                descripcion:this.model.toJSON().descripcion,
+            })
         },
         get_categoria:function (categoria) {
             var self = this;
@@ -51,6 +60,19 @@ define([
                 this.model = coincidencia;
                 this.render();
             }
+        },
+        crear_catalogo:function () {
+            this.catalogo = new CatalogoView({
+                el:this.$('.catalogo_productos'),
+            });
+            this.catalogo.buscar(this.model.toJSON().slug);
+        },
+        crear_breadcrum:function () {
+            this.breadcrumb = new BreadcumbView({
+                el:this.$('.nav-breadcrumb'),
+                collection:this.collection,
+                model:this.model,
+            });
         }
     });
 

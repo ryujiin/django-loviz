@@ -8,6 +8,7 @@ class CategoriaSerializer(serializers.ModelSerializer):
 	padre = serializers.CharField(read_only=True)
 	link  = serializers.SerializerMethodField()
 	imagen = serializers.SerializerMethodField()
+
 	class Meta:
 		model = Categoria
 		fields = ('id','nombre','full_name','seccion','slug','descripcion','activo','imagen','padre','link','titulo_seo')
@@ -110,7 +111,7 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 		model = Producto
 		fields = ('id','nombre','full_name','color','slug','activo','descripcion','thum','link',
 				'oferta','precio','precio_venta','nuevo',
-				'imagenes_producto','variaciones','relaciones','video','detalles','valoracion','num_comentarios','categorias','material_producto')
+				'imagenes_producto','variaciones','relaciones','video','valoracion','num_comentarios','categorias','material_producto')
 
 	def get_nuevo(self,obj):
 		nuevo = obj.guardar_novedad()
@@ -153,6 +154,16 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 
 	def get_num_comentarios(self,obj):
 		return Comentario.objects.filter(producto=obj.id).count()
+
+#Serializer de busqueda
+from drf_haystack.serializers import HaystackSerializer
+from search_indexes import ProductoIndex
+
+class ProductoBusquedaSerializer(HaystackSerializer):
+	class Meta:
+		index_classes = [ProductoIndex]
+		fields = ["text", "nombre", "categorias", "autocomplete"]
+
 
 #Serializador Oficina
 class ProductoListaSerializer(serializers.ModelSerializer):

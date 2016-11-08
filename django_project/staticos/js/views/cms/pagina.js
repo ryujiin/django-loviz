@@ -10,7 +10,8 @@ define([
     '../../models/modeloclean',
     '../../views/cms/bloque',
     '../../views/cms/carrusel',
-], function ($, _, Backbone, swig,PaginasCollection,CollectionPage,ModeloClean,BloqueView,CarruselView) {
+    'headModel'
+], function ($, _, Backbone, swig,PaginasCollection,CollectionPage,ModeloClean,BloqueView,CarruselView,HeadModel) {
     'use strict';
 
     var PageView = Backbone.View.extend({
@@ -29,7 +30,10 @@ define([
         render: function (modelo) {        
             this.template= swig.compile($('#page_tema1_template').html());
             this.$el.html(this.template(modelo.toJSON()));
-            this.head(modelo.toJSON().titulo,modelo.toJSON().descripcion);
+            HeadModel.set({
+                titulo:modelo.toJSON().titulo,
+                descripcion:modelo.toJSON().descripcion
+            })
             this.rellenar(modelo);
         },
         buscar_page:function(slug){
@@ -46,18 +50,7 @@ define([
                     debugger;
                 })
             }else{
-                debugger;
                 this.render(coincidencia);
-            }
-        },
-        head:function (titulo,descripcion) {
-            $('title').empty().append(titulo);
-            if (descripcion) {
-                this.$('meta[name=description]').remove();
-                this.$el.append('<meta name="description" content="'+descripcion+'">')    
-            }else{
-                this.$('meta[name=description]').remove();
-                this.$el.append('<meta name="description" content="'+descripcion+'">')
             }
         },
         rellenar:function (modelo) {
@@ -84,7 +77,15 @@ define([
         },
         render_404:function () {
             this.template = swig.compile($('#page_error_template').html());
-            this.$el.html(this.template());            
+            this.$el.html(this.template());
+
+            var titulo = 'Upps Parece que hubo un error 404';
+            var descripcion = 'No se encontro lo que buscabas lo sentimos mucho';
+            HeadModel.set({
+                titulo:titulo,
+                descripcion:descripcion,
+            })
+
         }
     });
 
