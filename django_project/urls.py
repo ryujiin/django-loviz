@@ -7,12 +7,15 @@ from rest_framework.routers import DefaultRouter
 
 from catalogo.views import CatalogoViewsets,CategoriaViewsets,ProductoBusquedaView
 from cmsweb.views import *
+from carro.views import LineasViewsets,CarroViewsets
+
 
 router = DefaultRouter()
 router.register(r'productos', CatalogoViewsets,'productos')
 router.register(r'productos/busqueda', ProductoBusquedaView,'busqueda')
 router.register(r'categoria', CategoriaViewsets,'categorias')
 router.register(r'cms/paginas', PaginaViewsets,'paginas')
+router.register(r'carro/lineas', LineasViewsets,'lineas')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

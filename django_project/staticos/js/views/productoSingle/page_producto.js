@@ -23,6 +23,8 @@ define([
         collection: new ProductoCollection(),
 
         events: {
+            'click .tallas_elegibles .en_stock':'cambiar_talla',            
+            'click #agregar_alCarro':'compra_producto',            
         },
 
         initialize: function (slug) {
@@ -83,11 +85,22 @@ define([
         },
         add_to_cart:function () {
             this.boton_add_cart = new AddToCart({
-                el:this.$('#addtocart'),
+                el:this.$('#addtocart')
             });
+        },
+        cambiar_talla:function (e) {
+            this.$('.tallas_elegibles .talla_seleccion').removeClass('seleccionado');
+            var talla = e.target.dataset.valor;
+            this.$('.precios .precio_variacion.mostrar').removeClass('mostrar');
+            this.$('.precios .precio_variacion.'+talla).addClass('mostrar');
+            $(e.target).addClass('seleccionado');
             this.boton_add_cart.model.set({
+                variacion:talla,
                 producto:this.model.id,
-            })
+            });
+        },
+        compra_producto:function () {
+            this.boton_add_cart.verificar_compra(this);            
         }
     });
 

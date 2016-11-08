@@ -141,6 +141,8 @@ class ProductoVariacion(models.Model):
 		if self.precio_oferta:
 			porcentaje = self.precio_oferta*100/self.precio_minorista
 			self.oferta = 100-int(porcentaje)
+		if self.oferta and not self.precio_oferta:
+			self.precio_oferta = self.precio_minorista*(100-self.oferta)/100
 		super(ProductoVariacion, self).save(*args, **kwargs)
 
 def url_imagen_pr(self,filename):

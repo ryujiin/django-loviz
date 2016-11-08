@@ -67,6 +67,113 @@
 					border-top none
 		.tabla_total_carro
 			font-size 1.2em
+.mini-cart
+	position relative
+	.mini-cart-label
+		display none
+	.mini-cart-container .icon-cart-stripe
+		color #f3f3f3
+	.mini-cart-label-movil
+			display none
+	.mini-cart-items
+		background #468847
+		width: 20px;
+		display: inline-block;
+		line-height: 20px;
+		text-align: center;
+		border-radius: 10px;
+		position: absolute;
+		right: -5px;
+		top: 10px;
+		font-weight: 700;
+		font-size: .8em;
+@media (min-width: 992px)
+	.mini-cart
+		float right
+		position relative
+		line-height 5pc
+		z-index 200
+		padding 0 25px
+		height 100%
+		&:hover
+			background #f4f4f4			
+			.mini_cart_head
+				cursor pointer
+			.mini_cart_lineas
+				display block
+		.mini_cart_head
+			font-family f_imprenta					
+			letter-spacing 1px
+		.mini-cart-label
+			display inline-block
+		.mini-cart-label-movil		
+			display none
+		.mini-cart-container .icon-cart-stripe
+			font-size 1.4em
+			vertical-align text-bottom
+		.mini-cart-items
+			color #fff
+			width: 20px;
+			display: inline-block;
+			line-height: 20px;
+			text-align: center;
+			border-radius: 10px;
+			position: absolute;
+			right: 10px;
+			top: 20px;
+			font-weight: 700;
+			font-size: .8em;
+		.mini_cart_lineas
+			position absolute
+			display none
+			background #fff
+			width 25em
+			top 86px
+			right 0
+			box-shadow 0 2px 5px rgba(0,0,0,.16)
+			.mini-cart-header
+				font-size 15px
+				padding 1em
+				margin 0px
+			.lineas-mini-cart
+				.mini-linea
+					display flex
+					padding 1em
+					border-bottom 1px solid #f4f4f4
+					.mini-linea-imagen
+						width 120px
+					.mini-linea-datos
+						line-height initial
+						margin-left 15px
+						h3
+							margin 0
+							font-size 15px
+							letter-spacing 1px
+							&:hover
+								text-decoration underline
+						.item
+							font-size 0.9em
+						.precios
+							font-weight bold
+							font-family georgia
+							font-size 14px
+			.mini-cart-subtotal
+				line-height initial
+				padding 0.5em
+				background #f4f4f4
+				text-align right
+				.value
+					margin-left 10px
+			.mini-cart-botones
+				padding-top 10px 
+				margin-bottom 20px
+				
+	
+
+
+
+
+
 //.lineas_carro
 	//margin-top 10px
 	//.etiquetas

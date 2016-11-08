@@ -5,7 +5,7 @@ define([
     'backbone',
     '../models/user',
     'storage',
-    'coockie'
+    'coockie',
 ], function (_, Backbone,UserModel,Storage,coockie) {
     'use strict';
 

@@ -20,36 +20,42 @@ define([
 
         id: '',
 
-        model:new LineaModel(),
-
         className: 'addtocart',
 
         events: {
         },
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
+            this.model = new LineaModel();
+            this.render();
+            this.listenTo(this.model, 'change:variacion', this.render);
         },
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
         },
-        //verificar_compra:function (vista) {
-            //var modeloCarro = CarroModel;
-            //var self = this;
-            //var carro = this.model.toJSON().carro;
-//
-            //if (carro) {
-                //this.comprar(vista);
-            //}else{
-                //modeloCarro.save().done(function(data){
-                    //$.localStorage.set({carro:data.id});
-                    //self.model.set({carro:data.id});
-                    //self.comprar(vista);
-                //});
-            //}
-        //},
-        //comprar:function (vista) {
+        verificar_compra:function (vista) {
+            var self = this;
+            if (CarroModel.id) {
+                this.comprar(vista);
+            }else{
+                CarroModel.save().done(function(data){
+                    $.localStorage.set({carro:data.id});
+                    self.comprar();
+                });
+            }
+        },
+        comprar:function (vista) {
+            var self = this;
+            if (CarroModel.id) {
+                this.model.set({carro:CarroModel.id});
+                this.model.save().done(function (data) { 
+                    CarroModel.fetch();
+                    vista.render();
+                });
+            }else{
+                debugger;
+            }
             //var self = this;
             //var loader = new LoaderFull();
             //var datos = this.model;
@@ -62,7 +68,7 @@ define([
                     //CarroModel.fetch();
                 //});
             //};
-        //},
+        },
         //crearMinicompra:function () {
             //var minicompra = new MiniCompra({
                 //model:this.model,

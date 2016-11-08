@@ -13,15 +13,53 @@
 </script>
 
 <script id="mini_carro_template" type="text/template">
-	{%if lineas%}
-		<span class="mini-cart-label"> S/. {{total}}</span>
-		<span class="icono icon-shopping-cart"></span>	
-		<span class="mini-cart-label-movil"> Carro</span>		
-		<span class="mini-cart-items">{{lineas}}</span>
-	{%else%}
-		<span class="icono icon-shopping-cart"></span>
-		<span class="mini-cart-label-movil"> Carro</span>		
-		<span class="mini-cart-empty">(0)</span>
+	<div class="mini_cart_head">
+		{%if num_lineas%}
+			<span class="mini-cart-label"> S/. {{total}}</span>
+			<span class="icono icon-shopping-cart"></span>	
+			<span class="mini-cart-label-movil"> Carro</span>		
+			<span class="mini-cart-items">{{num_lineas}}</span>
+		{%else%}
+			<span class="icono icon-shopping-cart"></span>
+			<span class="mini-cart-label-movil"> Carro</span>		
+			<span class="mini-cart-empty">(0)</span>
+		{%endif%}
+	</div>	
+	{%if num_lineas%}
+		<div class="mini_cart_lineas">
+			<h3 class="mini-cart-header">Tu Bolsa de Compras</h3>
+			<div class="lineas-mini-cart">
+				{%for linea in lineas%}
+				<div class="mini-linea">
+					<div class="mini-linea-imagen">
+						<img src="{{linea.thum}}">
+					</div>
+					<div class="mini-linea-datos">
+						<h3>{{linea.nombre}}</h3>
+						<div class="item">Color:<span>{{linea.color}}</span></div>
+						<div class="item">Talla:<span>{{linea.talla}}</span></div>
+						<div class="item">Cantidad:<span>{{linea.cantidad}}</span></div>			
+						<div class="precios">S/. {{linea.subtotal}}</div>
+						<div>In Stock</div>
+					</div>
+				</div>
+				{%endfor%}
+			</div>
+			<div class="mini-cart-subtotal">
+				<label>SubTotal:</label>
+				<span class="value">S/. {{subtotal}}</span>
+			</div>
+			<div class="mini-cart-botones container-fluid">
+				<div class="row">
+					<div class="col-md-6">
+						<a class="btn btn-default link btn-block" href="/cart/">Mirar Bolsa</a>
+					</div>
+					<div class="col-md-6">
+						<a class="btn btn-default link btn-block btn-contraste" href="/checkout/">Ir a Caja</a>
+					</div>
+				</div>				
+			</div>	
+		</div>
 	{%endif%}
 </script>
 
