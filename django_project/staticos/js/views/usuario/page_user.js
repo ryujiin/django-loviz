@@ -5,7 +5,6 @@ define([
     'underscore',
     'backbone',
     'swig',
-    '../../views/app/breadcrumb',
     '../../models/user',
     '../../views/app/header',
     '../../views/usuario/manage_cuenta',
@@ -14,12 +13,11 @@ define([
     '../../views/usuario/manage_deseos',
     '../../views/usuario/user_formCrear',
     '../../views/usuario/user_formLogin',
-], function ($, _, Backbone, swig,BreadView,UserModel,Head,ManageCuenta,ManageDirecciones,ManagePedidos,ManageDeseos,FormCrear,FormLogin) {
+], function ($, _, Backbone, swig,UserModel,Head,ManageCuenta,ManageDirecciones,ManagePedidos,ManageDeseos,FormCrear,FormLogin) {
     'use strict';
 
     var PageUserView = Backbone.View.extend({
         el:$('#contenido'),
-        template: swig.compile($('#page_user_tlp').html()),
 
         tagName: 'div',
 
@@ -32,27 +30,27 @@ define([
         },
 
         render: function () {
+            this.template =  swig.compile($('#page_user_tlp').html());
             this.$el.html(this.template(this.model.toJSON()));
-            this.$el.removeClass();            
-            this.addBread();
+            this.crear_modales();
             this.change_head();
             this.finalizo();
         },
+        render_anonimo:function () {
+            this.template = swig.compile($('#page_user_Anonimo').html())
+            this.$el.html(this.template(this.model.toJSON()));
+            this.agregarForms();
+        },        
         verificar_login:function () {
             if (Backbone.history.fragment=="usuario/perfil/") {
                 debugger;
-                this.render();
+                if (this.model.id) {
+                    this.render();
+                }else{
+                    this.render_anonimo();
+                }
             };
             debugger;
-            //debugger;
-            //if (this.model.id) {
-                //this.$el.html(this.template(this.model.toJSON()));
-                //this.crear_modales();
-            //}else{
-                //this.template = swig.compile($('#page_user_Anonimo').html())
-                //this.$el.html(this.template(this.model.toJSON()));
-                //this.agregarForms();
-            //}
         },
         agregarForms:function () {
             var formlogin = new FormLogin({
@@ -63,16 +61,6 @@ define([
             })
             this.$('.columna1').append(formlogin.$el);
             this.$('.columna2').append(formcrear.$el);
-        },
-        addBread: function(){
-            this.breadVista = new BreadView({el:$('.nav-breadcrumb')});
-            this.breadVista.collection.reset();
-
-            this.breadVista.collection.add([
-                {nombre:'Home', link:'/'},
-                {nombre:'Mi cuenta', link:null}
-            ]);
-            this.breadVista.render();
         },
         change_head:function () {
             var titulo = 'Mi cuenta | Loviz DelCarpio® :: LovizDC, lovizdc.com';

@@ -5,7 +5,6 @@ define([
     'underscore',
     'backbone',
     'swig',
-    '../../views/app/breadcrumb',
     '../../models/user',
     '../../views/app/header',
     '../../views/usuario/manage_cuenta',
@@ -14,7 +13,7 @@ define([
     '../../views/usuario/manage_deseos',
     '../../views/usuario/user_formCrear',
     '../../views/usuario/user_formLogin',
-], function ($, _, Backbone, swig,BreadView,UserModel,Head,ManageCuenta,ManageDirecciones,ManagePedidos,ManageDeseos,FormCrear,FormLogin) {
+], function ($, _, Backbone, swig,UserModel,Head,ManageCuenta,ManageDirecciones,ManagePedidos,ManageDeseos,FormCrear,FormLogin) {
     'use strict';
 
     var PageUserView = Backbone.View.extend({
@@ -34,7 +33,6 @@ define([
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             this.$el.removeClass();            
-            this.addBread();
             this.change_head();
             this.finalizo();
         },
