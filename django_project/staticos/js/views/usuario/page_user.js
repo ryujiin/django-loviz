@@ -43,14 +43,12 @@ define([
         },        
         verificar_login:function () {
             if (Backbone.history.fragment=="usuario/perfil/") {
-                debugger;
                 if (this.model.id) {
                     this.render();
                 }else{
                     this.render_anonimo();
                 }
             };
-            debugger;
         },
         agregarForms:function () {
             var formlogin = new FormLogin({

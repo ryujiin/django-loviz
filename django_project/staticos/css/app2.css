@@ -1591,7 +1591,7 @@ h2 .linea {
 .lista-productos .productos .imagen_lista {
   position: relative;
   min-height: 250px;
-  border-top: 1px solid #333;
+  border-top: 1px solid #ddd;
 }
 .lista-productos .productos .imagen_lista img {
   opacity: 0;
