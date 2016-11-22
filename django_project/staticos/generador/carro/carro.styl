@@ -1,28 +1,70 @@
 .carro_page
-	.titulo_page
+	padding-top 20px
+	.titulo
 		display none
 	.btn
-		width 100%	
-.carro_lineas
+		width 100%
+	.orden_resumen
+		padding 15px
+		table
+			width 100%
+	.resumen_carro
+		.marco_resumen
+			box-shadow 0 2px 5px rgba(0,0,0,.16)
+			border 1px solid #f4f4f4
+			padding 15px
+		.titulo_resumen
+			font-family f_imprenta
+			text-transform uppercase
+			font-size 0.9em
+			letter-spacing 2px
+		.texto_envio
+			font-family f_imprenta
+			background #f4f4f4
+			text-transform uppercase
+			font-size 0.8em
+			margin-top 10px
+			letter-spacing 2px
+		.seguridad
+			
+			.icono-seguridad
+				margin-top 20px
+				width 54px
+				height 34px
+				display inline-block
+				background-image url('../imgs/payment.png')
+				&.mastercard
+					background-position-x -213px
+				&.paypal
+					background-position-x -159px
+				&.visa
+					background-position-x -106px								
+.todas_lineas_carro
+	strong
+		font-family f_imprenta
+		text-transform uppercase
+.lineas_carro
+	border-top 2px solid #f4f4f4
 	.etiquetas
 		display none
-	.lineas_items
+	.linea
+		position relative
+		overflow hidden
+		padding 10px 0
+		border-top 1px solid #f4f4f4
 		.acciones_linea
-			border-top 1px solid #f4f4f4			
-			border-bottom 2px solid #f4f4f4
-			margin-top 5px
-			padding 5px 0
+			position absolute
 			font-family f_imprenta
 			text-transform uppercase
 			font-weight bold
+			right 0
 			.eliminar
 				cursor pointer
 		.img_linea
-			width 50%
-			float right
+			width 30%
+			float left
 		.detalle_linea
-			width 50%
-			padding-top 20px
+			font-size 0.8em
 			.nombre
 				font-family f_imprenta
 				font-weight bold
@@ -30,10 +72,20 @@
 				font-size 20px
 			.color
 				text-transform uppercase
+		.caja_detalle_movil
+			float right
+			width 70%
+			padding-left 20px
 		.precio_linea
-			margin-top 15px
+			border-bottom 1px solid #f4f4f4
+			padding-bottom 10px			
 		.cantidad_linea
+			padding-top 5px
 			margin 10px
+			float left
+			padding-left 25%
+			.etiqueta_mobil
+				display none
 			.cantidad
 				border 1px solid #f4f4f4
 				padding 8px 20px
@@ -44,8 +96,11 @@
 				&:hover
 					color #333
 		.subtotal_linea
+			font-weight bold
+			float right
+			margin-top 10px
 			.etiqueta_mobil
-				display block
+				display inline-block
 	.carga_linea
 		display none
 		z-index 2
@@ -54,6 +109,7 @@
 		height 100%
 		background-color rgba(255,255,255,0.5)
 		left 0
+
 .total_carro
 	margin 30px 0
 	table
@@ -87,7 +143,14 @@
 		top: 10px;
 		font-weight: 700;
 		font-size: .8em;
+	.mini_cart_lineas
+		display none
+.carro_no_items
+	padding 100px
 @media (min-width: 992px)
+	.carro_page
+		.orden_resumen
+			display none
 	.mini-cart
 		float right
 		position relative
@@ -167,12 +230,6 @@
 			.mini-cart-botones
 				padding-top 10px 
 				margin-bottom 20px
-				
-	
-
-
-
-
 
 //.lineas_carro
 	//margin-top 10px

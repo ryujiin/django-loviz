@@ -1,15 +1,86 @@
 {% verbatim %}
 <script id="page_carro_template" type="text/template">
+	{%if num_lineas%}
 	<div class="container carro_page">
-		<div class="nav-breadcrumb"></div>
-		<section class="titulo text-center"></section>
-		<section class="lineas_carro"></section>
+		<section class="titulo">
+			<h1>Carrito de Compras</h1>
+		</section>
+		<div class="row">
+			<div class="orden_resumen">
+				<table class="table">
+					<thead>
+						<tr>
+							<th colspan="2">Resumen de Orden</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="2"><span>1</span> Articulo(s) en el Carrito</td>
+						</tr>
+						<tr>
+							<td>Costo de Envio (Envio Estandar)</td>
+							<td>Gratis</td>
+						</tr>
+						<tr>
+							<td>SubTotal</td>
+							<td>S/. 20.00</td>
+						</tr>
+					</tbody>
+				</table>
+				<a class="btn btn-especial btn-default link" href="/procesar-compra/">Ir a la Caja</a>
+			</div>
+			<div class="todas_lineas_carro col-md-9">
+				<strong>Producto Detalles</strong>
+				<div class="lineas_carro"></div>
+			</div>
+			<div class="resumen_carro col-md-3">
+				<div class="marco_resumen">
+					<table class="table">
+						<thead>
+							<tr>
+								<th colspan="2" class="titulo_resumen">Resumen de Orden</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2"><span>1</span> Articulo(s) en el Carrito</td>
+							</tr>
+							<tr>
+								<td >Costo de Envio (Envio Estandar)</td>
+								<td width="80">Gratis</td>
+							</tr>
+							<tr>
+								<td><strong>SubTotal</strong></td>
+								<td><strong>S/. 20.00</strong></td>
+							</tr>
+						</tbody>
+					</table>
+					<a class="btn btn-especial btn-default btn-block link" href="/procesar-compra/">
+						Procesar Compra
+						<span class="icon-chevron-small-right"></span>
+					</a>
+					<div class="text-center texto_envio">
+						¡Tu pedido califica para envio gratuito!
+					</div>
+				</div>				
+				<div class="seguridad">
+					<div class="icono-seguridad visa"></div>
+					<div class="icono-seguridad mastercard"></div>
+					<div class="icono-seguridad paypal"></div>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<section class="cupones_carro col-md-6"></section>
 			<section class="total_carro col-md-6"></section>
 		</div>
-		<div class="boton_checkout"></div>
 	</div>
+	{%else%}
+	<div class="text-center carro_no_items">
+		<h2 class="titulo">Carro de tienda</h2>
+		<p>Se encontraron <em> 0 Articulos</em> en su carrio</p>
+	</div>	
+	{%endif%}
 </script>
 
 <script id="mini_carro_template" type="text/template">
@@ -30,6 +101,7 @@
 			<h3 class="mini-cart-header">Tu Bolsa de Compras</h3>
 			<div class="lineas-mini-cart">
 				{%for linea in lineas%}
+				{%if linea.activo%}
 				<div class="mini-linea">
 					<div class="mini-linea-imagen">
 						<img src="{{linea.thum}}">
@@ -43,6 +115,7 @@
 						<div>In Stock</div>
 					</div>
 				</div>
+				{%endif%}
 				{%endfor%}
 			</div>
 			<div class="mini-cart-subtotal">
@@ -52,10 +125,10 @@
 			<div class="mini-cart-botones container-fluid">
 				<div class="row">
 					<div class="col-md-6">
-						<a class="btn btn-default link btn-block" href="/cart/">Mirar Bolsa</a>
+						<a class="btn btn-default link btn-block" href="/carro/">Mirar Bolsa</a>
 					</div>
 					<div class="col-md-6">
-						<a class="btn btn-default link btn-block btn-contraste" href="/checkout/">Ir a Caja</a>
+						<a class="btn btn-default link btn-block btn-contraste" href="/procesar-compra/">Procesar mi compra</a>
 					</div>
 				</div>				
 			</div>	
@@ -109,14 +182,14 @@
 	<div class="img_linea">
 		<img src="{{thum}}">
 	</div>
-	<div class="detalle_linea">
+	<div class="detalle_linea caja_detalle_movil">
 		<div class="nombre">{{nombre}}</div>
 		<div class="genero">{{genero}}</div>
 		<div class="color">{{color}}</div>
 		<div class="talla">Talla: {{talla}}</div>
 	</div>
 	
-	<div class="precio_linea">
+	<div class="precio_linea caja_detalle_movil">
 		<span class="etiqueta_mobil">Precio</span>
 		<span>S/. {{precio}}</span>
 	</div>

@@ -26,10 +26,10 @@ class PedidoViewSet(viewsets.ModelViewSet):
 			queryset = Pedido.objects.filter(user=self.request.user.pk)
 		return queryset
 
-class MetodoEnvioViewSet(viewsets.ModelViewSet):
+class MetodoEnvioViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = MetodoEnvioSerializer
 
-	def get_queryset(self):
+	def get_queryset(self):	
 		if self.request.user.is_authenticated():
 			try:
 				total = Carro.objects.get(propietario=self.request.user,estado="Abierto")
@@ -43,7 +43,7 @@ class MetodoEnvioViewSet(viewsets.ModelViewSet):
 				queryset = MetodoEnvio.objects.filter(grupo=1)
 		else:
 			queryset = MetodoEnvio.objects.filter(grupo=1)
-		return queryset
+		return queryset.order_by('precio')
 
 
 @csrf_exempt

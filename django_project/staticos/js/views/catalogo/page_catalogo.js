@@ -35,10 +35,7 @@ define([
             this.$el.html(this.template(this.model.toJSON()));
             this.crear_catalogo();
             this.crear_breadcrum();
-            HeadModel.set({
-                titulo:this.model.toJSON().titulo_seo,
-                descripcion:this.model.toJSON().descripcion,
-            })
+            this.header();
         },
         get_categoria:function (categoria) {
             var self = this;
@@ -73,6 +70,18 @@ define([
                 collection:this.collection,
                 model:this.model,
             });
+        },
+        header:function () {
+            var titulo,descripcion;
+            if (this.model.toJSON().titulo_seo) {
+                titulo = this.model.toJSON().titulo_seo;
+            }else{
+                titulo = this.model.toJSON().nombre;
+            }
+            HeadModel.set({
+                titulo:titulo,
+                descripcion:this.model.toJSON().descripcion,
+            })
         }
     });
 

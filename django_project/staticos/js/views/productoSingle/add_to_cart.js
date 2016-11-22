@@ -49,6 +49,7 @@ define([
             var self = this;
             if (CarroModel.id) {
                 this.model.set({carro:CarroModel.id});
+                debugger;
                 this.model.save().done(function (data) { 
                     CarroModel.fetch();
                     vista.render();

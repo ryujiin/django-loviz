@@ -27,10 +27,10 @@ define([
             'click #agregar_alCarro':'compra_producto',            
         },
 
-        initialize: function (slug) {
-            this.model = this.get_modelo(slug);
+        initialize: function () {            
         },
-        render:function () {
+        render:function (slug) {
+            debugger;
             this.$el.html(this.template(this.model.toJSON()));
             this.changeHead();
             this.addbread();
@@ -45,6 +45,7 @@ define([
             }).done(function (e) {
                 var coincidencia = self.collection.findWhere({slug:slug});
                 if (coincidencia) {
+                    debugger;
                     self.model = coincidencia;
                     self.render();
                 }else{
@@ -103,6 +104,8 @@ define([
             this.boton_add_cart.verificar_compra(this);            
         }
     });
+    
+    var productopage = new ProductoView();
 
-    return ProductoView;
+    return productopage;
 });

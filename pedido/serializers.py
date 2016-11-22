@@ -22,3 +22,4 @@ class PedidoSerializer(serializers.ModelSerializer):
 class MetodoEnvioSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = MetodoEnvio
+		fields = ('__all__')

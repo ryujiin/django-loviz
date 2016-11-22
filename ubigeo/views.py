@@ -63,15 +63,15 @@ from rest_framework.response import Response
 class UbigeoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ubigeo
+        fields = ('__all__')
 
 class RegionViewset(viewsets.ReadOnlyModelViewSet):
     model = Ubigeo
     serializer_class = UbigeoSerializer
-    queryset = Ubigeo.objects.all()
 
-    def list(self,request):
-        region = request.GET.get('region')
+    def get_queryset(self):
         queryset = Ubigeo.objects.filter(parent=None).order_by('name')
-        serializer = UbigeoSerializer(queryset, many=True)
-        return Response(serializer.data)
-
+        region = self.request.query_params.get('region',None)
+        if region:
+            queryset = Ubigeo.objects.filter(parent=region).order_by('name')
+        return queryset

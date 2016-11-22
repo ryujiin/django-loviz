@@ -90,8 +90,9 @@ def get_tipo_cambio():
 	return tipo_cambio
 
 def paypal_paymet(request):
-	pedido = request.GET['pedido']
-	tipo_cambio = round(get_tipo_cambio(),2)
+	pedido = request.GET.get('pedido', False)
+	#tipo_cambio = round(get_tipo_cambio(),2)
+	tipo_cambio = round(3.345,2)
 	if pedido:
 		try:
 			carro = Carro.objects.get(pedido__numero_pedido = pedido)
@@ -112,7 +113,7 @@ def paypal_paymet(request):
 			}
 		form = PayPalPaymentsForm(initial=paypal_dict)
 		context = {"form": form,'total_carro':total_carro,'tipo_cambio':tipo_cambio,'total_dolares':total_dolares}
-		return render(request, "payment.html", context)
+		return render(request, "paginas/payment_paypal.html", context)
 	else:
 		raise Http404("No Hay Pedido")
 

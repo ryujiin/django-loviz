@@ -28,10 +28,10 @@ define([
             "propietario": null,
             "estado": "Abierto",
             "sesion_carro": '',
-            "lineas": 0,
+            "num_lineas": 0,
             "total": "0.00",
             "subtotal": "0.00",
-            "envio": 0
+            "envio": 0,
         },
 
         validate: function(attrs, options) {

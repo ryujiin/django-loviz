@@ -7,6 +7,7 @@ from cliente.models import Cliente
 class DireccionSerilizer(serializers.ModelSerializer):
 	class Meta:
 		model = Direccion
+		fields = ('__all__')
 
 class UsuarioSerializer(serializers.ModelSerializer):
 	class Meta:

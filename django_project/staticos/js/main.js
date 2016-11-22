@@ -32,7 +32,7 @@ require.config({
         jquery: '../bower_components/jquery/dist/jquery',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
-        bootstrap: '../bower_components/dist/js/bootstrap',
+        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
         swig: '../node_modules/swig/dist/swig',
         owl: '../vendor/owl/owl.carousel',
         zoom: '../bower_components/jquery-zoom/jquery.zoom',
@@ -61,17 +61,15 @@ require([
         }else{
             $('#header').removeClass('fijo');
         };
-
     }
     $(window).scroll(fixDiv);
     fixDiv();
 
     $(function(){
-
         $.ajaxSetup({
             crossDomain: true,
             beforeSend: function(xhr, settings) {
-                var csrfSafeMethod = function(method) { 
+                var csrfSafeMethod = function(method) {
                     // these HTTP methods do not require CSRF protection
                     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
                 };

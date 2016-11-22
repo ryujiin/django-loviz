@@ -16,7 +16,7 @@ class LineaSerializer(serializers.ModelSerializer):
 	genero = serializers.SerializerMethodField()
 	class Meta:
 		model = LineaCarro
-		fields = ('id','carro','producto','variacion','thum','cantidad','nombre','talla','precio','subtotal','oferta','color','full_name','genero')
+		fields = ('id','carro','producto','variacion','thum','cantidad','nombre','talla','precio','subtotal','oferta','color','full_name','genero','activo')
 	def get_nombre(self,obj):
 		return obj.producto.nombre
 
@@ -48,7 +48,7 @@ class LineaSerializer(serializers.ModelSerializer):
 		return thum
 
 class CarroSerializer(serializers.ModelSerializer):
-	lineas = LineaSerializer(many=True)
+	lineas = LineaSerializer(many=True,read_only=True)
 	pedido = serializers.SerializerMethodField()
 	num_lineas = serializers.SerializerMethodField()
 	total = serializers.SerializerMethodField()

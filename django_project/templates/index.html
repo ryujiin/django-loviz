@@ -56,6 +56,9 @@
       {% include 'templatejs/procesar_tlp_js.html' %}
       {% include 'templatejs2/carro_tlp_js.html' %}
     </div>
+    <form>
+      {% csrf_token %}
+    </form>
 
     <script data-main="{% static 'js/main' %}" src="{% static 'bower_components/requirejs/require.js' %}"></script>
 

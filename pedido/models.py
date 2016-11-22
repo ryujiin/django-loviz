@@ -81,8 +81,11 @@ class MetodoEnvio(models.Model):
 	nombre = models.CharField(max_length=100)
 	descripcion = models.TextField(blank=True,null=True)
 	precio = models.DecimalField(decimal_places=2,max_digits=12)
-	restricciones = models.ManyToManyField(Ubigeo,blank=True)
+	restricciones = models.ManyToManyField(Ubigeo,blank=True,help_text='Solo en este lugar esta habilitado',related_name='restricciones_solo')
+	exepciones = models.ManyToManyField(Ubigeo,blank=True,help_text='Menos en este esta habilitado',related_name='restricciones_menos')	
+	restriccion_precio = models.DecimalField(decimal_places=2,max_digits=12,default=0,help_text='Todo precio mayor que ese numero lo habilita')
 	grupo = models.PositiveIntegerField(default=0)
+
 
 	def __unicode__(self):
 		return "%s - S/.%s" %(self.nombre, self.precio)

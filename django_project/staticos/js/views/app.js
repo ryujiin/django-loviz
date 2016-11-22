@@ -4,9 +4,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    '../views/carro/carro',
-    'carro_main'
-], function ($, _, Backbone,CarroView,CarroModel) {
+    '../views/carro/minicarro',
+    'carro_main',
+    '../views/usuario/user_links',  
+    '../models/user'  
+], function ($, _, Backbone,CarroView,CarroModel,UserLinkView,UserModel) {
     'use strict';
 
     var AppView = Backbone.View.extend({
@@ -18,9 +20,9 @@ define([
         },
 
         initialize: function () {
-            //var user_link = new UserLinkView({
-                //model:UserModel
-            //})
+            var user_link = new UserLinkView({
+                model:UserModel
+            });
             var mini_carro = new CarroView({
                 model:CarroModel
             });
