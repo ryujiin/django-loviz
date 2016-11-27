@@ -37,9 +37,11 @@ define([
 
         render: function () {
             this.$el.html(this.template());
-            this.addTarjeta();            
-            this.addPaypal();
-            this.addContraEntrega();
+            if (this.model.id !==undefined) {
+                this.addTarjeta();            
+                this.addPaypal();
+                this.addContraEntrega();    
+            };            
             this.ver_estado();
         },
         ver_estado:function () {

@@ -42,18 +42,21 @@ define([
                 if (data.id!==0) {
                     self.buscar_user();
                     if (vista.model.name==='pedido') {
-                        vista.model.set('paso_actual',2);
-                    }else{
-                        vista.loader.remove();
+                        vista.loader.remove();                        
+                        vista.model.set({'paso_actual':2,'ajax':true});
+                    }else{                        
                         Backbone.history.navigate('/usuario/perfil/', {trigger:true})
+                        vista.loader.remove();
                     }
                 }else{
                     vista.error_login();                       
                 }                
             }).fail(function(data){
-                vista.error_login();                    
+                vista.error_login();  
+                vista.loader.remove();
+
             }).always(function(){
-                //progrecion_bar.remove();
+                
             });
         },
         crear_user:function (email,pass,nombre,apellido,vista) {

@@ -178,10 +178,11 @@ def get_stripe_key(request):
 def definir_pago(request):
 	valor = False
 	if request.POST:
-		try:
-			direccion = Direccion.objects.get(pk=request.POST['direccion']);						
-			if direccion.ubigeo.parent.name == 'Lima':
-				valor = True
-		except Direccion.DoesNotExist:
-			valor = False
+		if request.POST['direccion']:			
+			try:
+				direccion = Direccion.objects.get(pk=request.POST['direccion']);						
+				if direccion.ubigeo.parent.name == 'Lima':
+					valor = True
+			except Direccion.DoesNotExist:
+				valor = False
 	return HttpResponse(json.dumps({'valor':valor}),content_type='application/json;charset=utf8')

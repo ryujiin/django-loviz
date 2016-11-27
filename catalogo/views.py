@@ -17,6 +17,7 @@ how_many_days = 20
 
 class CatalogoViewsets(viewsets.ReadOnlyModelViewSet):
 	serializer_class = ProductoSingleSereializer
+	ordering_fields = ('precio_sort', 'num_comentarios')
 	
 	def get_queryset(self):
 		queryset = Producto.objects.filter(activo=True).order_by('-actualizado')
@@ -27,7 +28,7 @@ class CatalogoViewsets(viewsets.ReadOnlyModelViewSet):
 			queryset = queryset[:limite]
 		if categoria:
 			if categoria == 'ofertas':
-				queryset = queryset.filter(is_ofert=True)
+				queryset = queryset.filter(en_oferta=True)
 			elif categoria == 'novedades':
 				queryset = queryset.filter(actualizado__gte=datetime.now()-timedelta(days=how_many_days))
 			else:

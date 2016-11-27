@@ -47,6 +47,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ComentarioImagenSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = ComentarioImagen
+		fields = ('__all__')
 
 from django.utils.timesince import timesince
 

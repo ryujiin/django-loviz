@@ -11,8 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Pedido(models.Model):
-	AUTENTICADO, METODO_ENVIO, METODO_PAGO,ESPERANDO_PAGO, PAGADO, ERROR_PAGO, ESPERANDO_ENVIO, ENVIADO, DEVUELTO = (
-        "autenticado", "metodo_envio", "metodo_pago",'esperando_pago', "pagado", "error_pago", "esperando_envio", "enviado", "devuelto")
+	AUTENTICADO, METODO_ENVIO, METODO_PAGO,ESPERANDO_PAGO, PAGADO, ERROR_PAGO, ESPERANDO_ENVIO, ENVIADO, DEVUELTO,FUSIONADO = (
+        "autenticado", "metodo_envio", "metodo_pago",'esperando_pago', "pagado", "error_pago", "esperando_envio", "enviado", "devuelto","fucionado")
 	ESTADO_ELECCION = (
         (AUTENTICADO, _("Autenticado - El usuario se encuentra autenticado y el pedido le pertenece")),
         (METODO_ENVIO, _("Metodo de Envio - Ya coloco el metodo de envio, esperando metodo de pago")),
@@ -22,6 +22,7 @@ class Pedido(models.Model):
         (ERROR_PAGO, _("Error en Pago - Ocurrio un error al pagar")),
         (ENVIADO, _("Enviado - El producto fue enviado")),
         (DEVUELTO, _("Devuelto - El producto fue devuelto")),
+        (FUSIONADO, _("Fusionado - Este Pedido se Fusiono con otro pedido")),
     )
 	numero_pedido = models.CharField(max_length=120,blank=True,null=True)
 	user = models.ForeignKey(User,related_name='Pedido', null=True,blank=True)
@@ -49,7 +50,6 @@ class Pedido(models.Model):
 		if self.pago_pedido:
 			self.estado_pedido = self.PAGADO
 			self.pagado = True
-		
 		super(Pedido, self).save(*args, **kwargs)
 		self.add_modificacion()
 

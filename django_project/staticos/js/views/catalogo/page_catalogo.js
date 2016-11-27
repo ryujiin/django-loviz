@@ -10,8 +10,10 @@ define([
     '../../collections/categorias',
     '../../views/catalogo/catalogo',
     '../../views/cms/breadcrumb',
+    '../../views/catalogo/refinamientos',
+    '../../views/catalogo/num_catalogo',
     'headModel'
-], function ($, _, Backbone, swig,CategoriaCollection,CatalogoView,BreadcumbView,HeadModel) {
+], function ($, _, Backbone, swig,CategoriaCollection,CatalogoView,BreadcumbView,Refinamiento,Num_Catalogo,HeadModel) {
     'use strict';
 
     var PageCatalogoView = Backbone.View.extend({
@@ -27,19 +29,22 @@ define([
         collection: new CategoriaCollection(),
 
         events: {
+            'click .sort_by li':'catalogo_sort_by'
         },
 
         initialize: function () {
         },
         render:function () {
             this.$el.html(this.template(this.model.toJSON()));
+            this.filtros = new Backbone.Collection();            
             this.crear_catalogo();
+            this.crear_refinamientos();
             this.crear_breadcrum();
             this.header();
         },
         get_categoria:function (categoria) {
             var self = this;
-            var coincidencia = this.collection.findWhere({slug:categoria})
+            var coincidencia = this.collection.findWhere({slug:categoria});
             if (coincidencia === undefined) {
                 this.collection.fetch().done(function (e) {
                     var encontrado = false;
@@ -58,9 +63,24 @@ define([
                 this.render();
             }
         },
+        catalogo_oferta:function () {
+            this.model = new Backbone.Model({
+                "nombre": "Ofertas Loviz DC",
+                "titulo_seo": "Ofertas De Loviz DelCarpio",
+                'slug':'ofertas',
+            });
+            this.render();
+        },
         crear_catalogo:function () {
+            this.num_catalogo_model = new Backbone.Model();
             this.catalogo = new CatalogoView({
                 el:this.$('.catalogo_productos'),
+                collection:this.filtros,
+                model:this.num_catalogo_model,
+            });
+            var vista_num_catalogo = new Num_Catalogo({
+                el:this.$('.catalogo_num_refino'),
+                model:this.num_catalogo_model,
             });
             this.catalogo.buscar(this.model.toJSON().slug);
         },
@@ -82,6 +102,19 @@ define([
                 titulo:titulo,
                 descripcion:this.model.toJSON().descripcion,
             })
+        },
+        crear_refinamientos:function () {
+            this.refinamiento = new Refinamiento({
+                el:this.$('.section-refinamiento'),
+                collection:this.filtros,
+                model:this.model,
+            }).render(this.collection)
+        },
+        catalogo_sort_by:function (e) {
+            var ordenar = e.target.dataset.sortby;
+            var modo = e.target.dataset.modo;
+            this.catalogo.sort_by(ordenar,modo);
+            this.num_catalogo_model.set({'sortby':e.target.innerText});
         }
     });
 

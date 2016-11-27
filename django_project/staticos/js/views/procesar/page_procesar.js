@@ -12,8 +12,9 @@ define([
     '../../views/procesar/paso_identificar',
     '../../collections/direcciones',
     '../../views/procesar/paso_pago',    
-    '../../views/procesar/resumen',        
-], function ($, _, Backbone, swig,CarroModel,UserModel,PedidoModel,PasoEnvio,PasoIdentificar,DireccionesCollection,PasoPago,Resumen) {
+    '../../views/procesar/resumen',
+    '../../views/app/loader_full',
+], function ($, _, Backbone, swig,CarroModel,UserModel,PedidoModel,PasoEnvio,PasoIdentificar,DireccionesCollection,PasoPago,Resumen,LoaderFull) {
     'use strict';
 
     var PageProcesarCompraView = Backbone.View.extend({
@@ -30,6 +31,9 @@ define([
         },
 
         initialize: function () {
+            this.model.set('ajax',false);
+            this.listenTo(CarroModel, "change:pedido", this.objtener_model, this);
+            this.listenTo(this.model, "change:ajax", this.aparecerAjax, this);
         },
 
         render: function () {
@@ -42,6 +46,7 @@ define([
             this.finalizo();
         },
         verificar_render:function () {
+            this.model.set('paso_actual',0);
             var self = this;
             if (CarroModel.toJSON().num_lineas) {
                 self.objtener_model();
@@ -49,18 +54,36 @@ define([
                 Backbone.history.navigate("/", {trigger: true});                    
             }
         },
-        objtener_model:function () {
-            var self = this;
-            var pedido_id = CarroModel.toJSON().pedido;
-            debugger;
-            if (pedido_id) {
-                this.model.id= pedido_id;
-                this.model.fetch().done(function () {
-                    self.render();
-                })
+        aparecerAjax:function () {
+            if (this.model.toJSON().ajax) {
+                this.vistaAjax = new LoaderFull();
             }else{
-                this.render();
+                if (this.vistaAjax) {
+                    this.vistaAjax.remove();
+                };
             }
+        },
+        objtener_model:function () {
+            var locacion = Backbone.history.location.pathname;
+            if (locacion === '/procesar-compra/') {
+                if (this.model.id===undefined) {
+                    var self = this;
+                    debugger;
+                    var pedido_id = CarroModel.toJSON().pedido;
+                    if (pedido_id) {
+                        debugger;
+                        this.model.id= pedido_id;
+                        this.model.fetch().done(function () {
+                            self.model.set('ajax',false);
+                            self.render();
+                        })
+                    }else{
+                        this.render();
+                    }
+                }else{
+                    this.render();
+                }         
+            };            
         },
         crear_paso_identificar:function () {
             this.paso_identificar = new PasoIdentificar({

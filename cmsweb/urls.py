@@ -1,6 +1,7 @@
 
 from django.conf.urls import  include, url
 from views import *
+from pedido.views import felicidades
 
 urlpatterns = [
 	url(r'^$',HomeView.as_view() , name='index'),
@@ -12,6 +13,6 @@ urlpatterns = [
 	url(r'^usuario/perfil/$',HomeView.as_view() , name='carro'),
 	url(r'^procesar-compra/',HomeView.as_view() , name='procesar'),
 	#url(r'^sp/',TiendaView.as_view() , name='page_static'),
-	#url(r'^felicidades/$','pedido.views.felicidades' , name='felicidades'),
+	url(r'^felicidades/$',felicidades , name='felicidades'),
 	#url(r'^custom/$',CustomView.as_view(), name='custom'),
 ]

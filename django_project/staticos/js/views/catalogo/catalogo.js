@@ -6,8 +6,9 @@ define([
     'backbone',
     '../../collections/productos',
     '../../views/catalogo/producto_lista',
-    '../../views/cms/ajaxloader'
-], function ($, _, Backbone,ProductoCollection,ProductoLista,AjaxLoaderView) {
+    '../../views/app/loader_full',
+    'facetr'
+], function ($, _, Backbone,ProductoCollection,ProductoLista,AjaxLoaderView,Facetas) {
     'use strict';
 
     var CatalogoView = Backbone.View.extend({
@@ -19,12 +20,15 @@ define([
         events: {},
 
         initialize: function () {
-            this.collection = new ProductoCollection();
-            this.listenTo(this.collection, 'add', this.addOne);
+            this.sort = '';
+            this.productos = new ProductoCollection();
+            this.listenTo(this.collection, 'update', this.productos_filtrar);
         },
 
         render: function () {
             this.$el.empty();
+            this.productos.forEach(this.addOne,this);
+            this.model.set({numero:this.productos.length});
         },
 
         addOne:function (modelo) {
@@ -34,13 +38,36 @@ define([
             producto.$el.addClass('col-md-3 col-sm-6 col-xs-6')
         },
         buscar:function (slug) {
-            var ajaxloader = new AjaxLoaderView();
-            this.$el.append(ajaxloader.$el);
-            this.collection.fetch({
-                data:$.param({categoria:slug})
+            var loader = new AjaxLoaderView();
+            var self = this;
+            this.categoria = slug;
+            this.productos.fetch({
+                data:$.param({categoria:this.categoria})
             }).done(function () {
-                ajaxloader.$el.fadeOut();
+                self.render();
+                loader.remove();
             })
+        },
+        productos_filtrar:function () {
+            this.collection.forEach(this.filtrar,this);
+            if (this.sort.modo === 'asc') {
+                Facetas(this.productos).sortBy(this.sort.ordenar).asc();
+            }else if(this.sort.modo === 'desc'){
+                Facetas(this.productos).sortBy(this.sort.ordenar).desc();                
+            }
+            this.render();
+        },
+        filtrar:function (modelo) {
+            Facetas(this.productos).facet(modelo.toJSON().filtro).value(modelo.toJSON().valor);            
+        },
+        sort_by:function (ordenar,modo) {
+            this.sort = {ordenar:ordenar,modo:modo}
+            if (this.sort.modo === 'asc') {
+                Facetas(this.productos).sortBy(this.sort.ordenar).asc();
+            }else if(this.sort.modo === 'desc'){
+                Facetas(this.productos).sortBy(this.sort.ordenar).desc();                
+            }
+            this.render();
         }
     });
 

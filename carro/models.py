@@ -75,7 +75,6 @@ class Carro(models.Model):
 				pedido = Pedido(user=self.propietario,estado_pedido='autenticado',)
 				pedido.save()
 				self.pedido = pedido
-
 		super(Carro, self).save(*args, **kwargs)		
 		if self.estado=='Abierto':
 			if self.propietario:
@@ -93,8 +92,10 @@ class Carro(models.Model):
 								linea.carro = self
 								linea.save()
 						carro.estado = self.FUCIONADA
-						print carro.estado
+						pedido = carro.pedido
+						pedido.estado_pedido = carro.pedido.FUSIONADO
 						carro.save()
+						pedido.save()
 
 	def fucionar_carros(carro_old):
 		carro_old.estado = self.FUCIONADA

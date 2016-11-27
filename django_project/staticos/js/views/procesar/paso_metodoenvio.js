@@ -45,7 +45,6 @@ define([
             this.ver_estado();
         },
         rellenar:function () {
-            
             var direcciones = new DireccionesViews({
                 el:this.$('.direcciones'),
                 collection:this.collection,
@@ -54,7 +53,6 @@ define([
             this.$('.metodo_envio_form').hide();            
         },
         ver_estado:function () {
-         
             var paso = this.model.toJSON().paso_actual;
             if (paso === 2) {
                 this.rellenar();

@@ -28,10 +28,22 @@ define([
         render: function () {
             var dato = {nombre:'Colores'}
             this.$el.html(this.template(dato));
-            this.addLink();
+            this.addLinks();
         },
-        addLink:function () {
-            debugger;
+        addLinks:function () {
+            var self = this;
+            this.colores = new ColoresCollection();
+            this.colores.fetch().done(function () {
+                self.recorrerLinks();
+            });
+        },
+        recorrerLinks:function () {
+            this.colores.forEach(this.addLink,this);
+        },
+        addLink:function (modelo) {
+            modelo.set('filtro','color');
+            var vista = new CateLink({model:modelo});
+            this.$('ul').append(vista.render().el);
         }
     });
 

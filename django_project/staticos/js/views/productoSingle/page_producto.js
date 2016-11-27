@@ -4,13 +4,17 @@ define([
     'backbone',
     'swig',
     '../../collections/productos',
+    '../../collections/comentarios',
     'headModel',
     '../../views/cms/breadcrumb',
     '../../views/productoSingle/galeria_full',
     '../../views/productoSingle/galeria_movil',
     '../../views/productoSingle/estrellas',
     '../../views/productoSingle/add_to_cart',
-], function ($, _, Backbone,swig,ProductoCollection,HeadModel,Breadcrumb,Galeria_full,Galeria_mobil,Estrellas,AddToCart) {
+    '../../views/productoSingle/nuevo_comentario',
+    '../../views/productoSingle/comentarios_seccion',
+    '../../views/app/loader_full',
+], function ($, _, Backbone,swig,ProductoCollection,ComentariosCollection,HeadModel,Breadcrumb,Galeria_full,Galeria_mobil,Estrellas,AddToCart,NuevoComentario,Comentarios,LoaderFull) {
     'use strict';
 
     var ProductoView = Backbone.View.extend({
@@ -30,22 +34,22 @@ define([
         initialize: function () {            
         },
         render:function (slug) {
-            debugger;
             this.$el.html(this.template(this.model.toJSON()));
             this.changeHead();
             this.addbread();
             this.add_galleria();
             this.add_estrellas();        
             this.add_to_cart();
+            this.add_comentario();
         },
         get_modelo:function (slug) {
+            var ajax_bloq = new LoaderFull();
             var self = this;            
             this.collection.fetch({
                 data:$.param({slug:slug})
             }).done(function (e) {
                 var coincidencia = self.collection.findWhere({slug:slug});
                 if (coincidencia) {
-                    debugger;
                     self.model = coincidencia;
                     self.render();
                 }else{
@@ -53,6 +57,8 @@ define([
                 }
             }).fail(function () {
                 Backbone.history.navigate('error404',{trigger:true});
+            }).always(function () {
+                ajax_bloq.remove();
             })
         },
         changeHead:function () {
@@ -102,6 +108,18 @@ define([
         },
         compra_producto:function () {
             this.boton_add_cart.verificar_compra(this);            
+        },
+        add_comentario:function () {
+            var comentarios_collection = new ComentariosCollection();
+            var new_comentario = new NuevoComentario({
+                el:this.$('#nuevo_comentario'),
+                collection:comentarios_collection,
+            })
+            var comentarios = new Comentarios({
+                el:this.$('#recomendation-producto'),
+                model:this.model,
+                collection:comentarios_collection
+            })
         }
     });
     

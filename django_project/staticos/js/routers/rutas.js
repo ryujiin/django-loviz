@@ -17,7 +17,8 @@ define([
             "producto/:slug/":'productoSingle',            
             'usuario/perfil/':'perfil',
             'carro/':'carro_page',            
-            'procesar-compra/':'procesar_compra',            
+            'procesar-compra/':'procesar_compra',          
+            'felicidades/':'',          
             '*notFound': 'notFound',
         },
 
@@ -28,7 +29,11 @@ define([
             console.log('primero');
         },
         catalogo:function (categoria) {
-            var categoria_modelo = CatalogoView.get_categoria(categoria);
+            if (categoria==='ofertas') {
+                CatalogoView.catalogo_oferta('ofertas');
+            }else{
+                CatalogoView.get_categoria(categoria);
+            }
         },
         perfil:function(){
             if ($.localStorage.get('pagina_procesar')===true) {
@@ -45,6 +50,9 @@ define([
         },
         procesar_compra:function () {
             PageProcesar.verificar_render();
+        },
+        felicidades:function () {
+            debugger;
         },
         notFound:function () {
             $('body').removeClass();

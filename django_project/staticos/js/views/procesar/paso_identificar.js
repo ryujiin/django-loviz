@@ -24,13 +24,12 @@ define([
         },
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);            
+            this.listenTo(this.model, 'change', this.render);
         },
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             var paso = this.model.toJSON().paso_actual;
-            debugger;
             if (paso === 1) {
                 this.add_forms();
                 this.$el.addClass('is-activo');

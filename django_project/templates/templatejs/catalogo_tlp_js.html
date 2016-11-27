@@ -6,19 +6,78 @@
 		<img src="{{imagen}}">
 		{%endif%}
 	</section>
-	<div class="catalogo container">		
+	<div class="catalogo container-fluid">		
 		<div class="nav-breadcrumb">
 		</div>
-		<div class="row">
-			<div class="col-md-2">
-				<h1 class="titulo"><small>{{padre}}</small>{{nombre}}</h1>
-			</div>
-			<div class="col-md-10"></div>
-		</div>		
-		<div class="catalogo_productos lista-productos row">
+		<div class="section-refinamiento">
+			<aside class="js-panel from-right">
+			    <div class="bloque categoria">
+			    </div>
+			    <div class="bloque colores">			    	
+			    </div>
+			    <div class="bloque tallas">
+			    </div>
+			    <div class="bloque">
+			    </div>
+			</aside>
+			<button class="btn btn-default refinar">Refinar Busqueda</button>
+			<div class="fondo_refinamiento"></div>
 		</div>
+		<div class="row">
+			<div class="section-main search-result-wrapper col-sm-12">
+				<div class="titulo-categoria col-sm-12">
+					<div class="catalogo_num_refino pull-right">
+					</div>
+					<div class="pull-left">
+						<h1 class="titulo"><small>{{padre}}</small>{{nombre}}</h1>
+					</div>
+					<div class="clear"></div>				
+			    </div>			    
+			 	<div class="catalogo_productos lista-productos row"></div>
+			</div>
+		</div>
+	</div>	
+</script>
+
+<script type="text/template" id="catalogo_num_refino_tlp">
+	<span class="num_articulo">{{numero}} Articulo(s)</span> |
+	<div class="btn-group sort_by" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			{%if sortby%}
+			{{sortby}}
+			{%else%}
+			Ordenar Por :
+			{%endif%}
+			 <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+		 <li>
+		 	<a href="#" class="no-link" data-sortby="precio_sort" data-modo="asc">
+		 		Precio - Menor a Mayor
+		 	</a>
+		 </li>
+		 <li>
+		 	<a href="#" class="no-link" data-sortby="precio_sort" data-modo="desc">
+		 		Precio - Mayor a Menor
+		 	</a>
+		 </li>
+		 <li>
+		 	<a href="#" class="no-link" data-sortby="vendidos" data-modo="desc">
+		 		Mas Vendidos
+		 	</a>
+		 </li>
+		 <li>
+		 	<a href="#" class="no-link" data-sortby="id" data-modo="desc">
+		 		Mas Nuevo
+		 	</a>
+		 </li>
+		 <li>
+		 	<a href="#" class="no-link" data-sortby="sort_valoracion" data-modo="desc">
+		 		Mejor Valorados
+		 	</a>
+		 </li>
+		</ul>
 	</div>
-	
 </script>
 
 <script id="titulo_catalogo_tlp" type="text/template">
@@ -48,28 +107,34 @@
 </script>
 
 <script id="categoria_bloque_tlp" type="text/template">
-	<h3 class="toogle"><span>{{nombre}}</span></h3>
-		<ul class="clearfix swatches lista">
-	</ul>
+	<div class="titulo_bloque">
+		<h2>{{nombre}}</h2>
+	</div>
+	<div class="cuerpo_bloque">
+		<ul></ul>
+	</div>
 </script>
 
 <script id="categoria_link_tlp" type="text/template">
-	{%if valor%}
-	<a class="no-link {{slug}} {%if activo%} activo {%else%} no_activo {%endif%}" href="#" data-tipo="{{valor}}" data-valor="{{nombre}}">
-		{%if hexdecimal%}
-		<div class="color-hex" style="background:{{hexdecimal}}"></div>
-		{%endif%}
-		{{nombre}}
-	</a>
+	{%if filtro%}
+		<div class="link_refinamiento" data-filtro="{{filtro}}" data-valor="{{nombre}}">
+			{%if filtro =='color'%}
+				<span class="color-html" style="background:{{hexdecimal}}"></span>
+			{%endif%}
+			<span class="filtro">{{nombre}}</span>
+		</div>
 	{%else%}
 	<a class="link" href="/catalogo/{{slug}}/">{{nombre}}</a>
 	{%endif%}
 </script>
 
 <script id="refinamiento_link_tlp" type="text/template">
-	<a class="no-link {{slug}} no_activo" href="#" data-tipo="{{valor}}" data-valor="{{nombre}}">
-		<span class="name">{{nombre}}</span>
-	</a>
+	<li data-filtro="{{filtro}}" data-valor="{{valor}}">
+		{%if filtro =='color'%}
+			<span class="color-html {{hexadecimal}}"></span>
+		{%endif%}
+		<span class="filtro">{{nombre}}</span>
+	</li>
 </script>
 
 <script id="productosLista_tlp" type="text/template">

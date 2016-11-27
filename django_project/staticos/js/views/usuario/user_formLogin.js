@@ -37,7 +37,6 @@ define([
             };
         },
         validar_vacio:function (valor,contenedor) {
-
             var error_contenedor = this.$(contenedor +' .error');
             error_contenedor.empty();
             if (valor==='') {

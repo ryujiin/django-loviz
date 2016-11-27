@@ -2,7 +2,7 @@ from rest_framework import serializers
 from models import *
 
 from cliente.models import Comentario
-
+from carro.models import Carro,LineaCarro
 
 class CategoriaSerializer(serializers.ModelSerializer):
 	padre = serializers.CharField(read_only=True)
@@ -100,8 +100,10 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 	precio = serializers.SerializerMethodField('get_precio_lista')
 	precio_venta = serializers.SerializerMethodField('get_precio_descuento')
 	oferta = serializers.SerializerMethodField()
+	precio_sort = serializers.SerializerMethodField()
 
 	valoracion = serializers.SerializerMethodField()
+	sort_valoracion = serializers.SerializerMethodField('get_valor_producto')
 	num_comentarios=serializers.SerializerMethodField()
 	categorias = CategoriaSerializer(many=True)
 
@@ -111,11 +113,16 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 		model = Producto
 		fields = ('id','nombre','full_name','color','slug','activo','descripcion','thum','link',
 				'oferta','precio','precio_venta','nuevo',
-				'imagenes_producto','variaciones','relaciones','video','valoracion','num_comentarios','categorias','material_producto')
+				'imagenes_producto','variaciones','relaciones','video','valoracion','num_comentarios',
+				'categorias','material_producto','precio_sort','vendidos','sort_valoracion','en_oferta')
 
 	def get_nuevo(self,obj):
 		nuevo = obj.guardar_novedad()
 		return nuevo
+
+	def get_precio_sort(self,obj):
+		precio= obj.get_precio_oferta_lista()
+		return precio
 		
 	def get_thum_img(self,obj):
 		thum = obj.get_thum().url
@@ -139,7 +146,7 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 		precio ="%0.2f" %(precio)		
 		return precio
 
-	def get_valoracion(self,obj):
+	def get_valor_producto(self,obj):
 		valoraciones = Comentario.objects.filter(producto=obj.id)
 		num = Comentario.objects.filter(producto=obj.id).count()
 		valor = 0.0
@@ -148,8 +155,11 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 			valor = valor+varia.valoracion
 		if num!=0:
 			valoracion = valor/num
-		valoracion ="%0.1f" %(valoracion)
+		return valoracion
 
+	def get_valoracion(self,obj):
+		valoracion = self.get_valor_producto(obj)
+		valoracion ="%0.1f" %(valoracion)		
 		return valoracion
 
 	def get_num_comentarios(self,obj):

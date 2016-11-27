@@ -22,6 +22,8 @@ class Producto(models.Model):
 	creado = models.DateTimeField(auto_now_add=True)
 	actualizado = models.DateTimeField(auto_now=True)
 	video = models.CharField(max_length=120, blank=True,null=True)
+	vendidos = models.PositiveIntegerField(default=0,editable=False)
+	en_oferta = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.full_name
@@ -30,6 +32,7 @@ class Producto(models.Model):
 		self.full_name = "%s (%s)" %(self.nombre,self.color)
 		if not self.slug:
 			self.slug = slugify(self.full_name)
+		self.guardar_oferta()	
 		super(Producto, self).save(*args, **kwargs)
 
 	def get_thum(self):
@@ -40,10 +43,10 @@ class Producto(models.Model):
 	def guardar_oferta(self):
 		oferta = self.get_en_oferta()
 		if oferta>0:
-			self.is_ofert = True
+			self.en_oferta = True
 		else:
-			self.is_ofert = False
-		self.save()
+			self.en_oferta = False
+
 
 	def guardar_novedad(self):
 		dia_no_nuevo = timezone.now()-timedelta(days=20)

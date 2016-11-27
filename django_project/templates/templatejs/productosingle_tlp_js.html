@@ -379,17 +379,21 @@
 
 <script id="comentario_lista" type="text/template">
     <div class="col-md-2">
-		      <div class="review_header">
-			      <div class="avatar">
-			      	{%if foto%}
-			      		<img src="{{foto}}" withd="100" height="100">
-			      	{%endif%}
-			      </div>
-			      <div class="estrellas_reviews estrellas">
-			      </div>
-			      <div class="user_name text-center">{{nombre}}</div>
-			      <div class="time text-center">{{creado}}</div>
-			  </div>
+    	<div class="review_header row">
+    		<div class="conte_avatar">
+    			<div class="avatar">
+	    			{%if foto%}
+	    			<img src="{{foto}}" withd="100" height="100">
+	    			{%endif%}
+	    		</div>
+    		</div>    		
+    		<div class="conte_name">
+    			<div class="estrellas_reviews estrellas">
+	    		</div>
+	    		<div class="user_name">{{nombre}}</div>
+	    		<div class="time">{{creado}}</div>
+    		</div>    		
+    	</div>
 	</div>
 	<div class="col-md-10">
 		<div class="review_body">

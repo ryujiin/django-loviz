@@ -44,7 +44,12 @@ define([
                 this.addLink(nuevo);
                 if (modelo.toJSON().padre) {
                     this.addmodelolink(modelo);
-                };    
+                }else{
+                    var home = new ModelClean({
+                        nombre:'inicio',link:'/'
+                    });
+                    this.addLink(home);
+                }
             }            
         },
         addmodelolink:function (modelo) {

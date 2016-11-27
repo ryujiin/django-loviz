@@ -16,6 +16,7 @@ define([
         className: '',
         events: {
             'click .link' : 'navegar',
+            'click .no-link' : 'no_navegar',
             'click .menu-mobil-icono': 'mostrar_navegador_mobil',
         },
 
@@ -43,6 +44,9 @@ define([
             $('#navigation').removeClass('is_activo');
             $('body').animate({scrollTop:0}, 'slow');
         },
+        no_navegar:function (e) {
+            e.preventDefault();            
+        }
     });
 
     return AppView;
