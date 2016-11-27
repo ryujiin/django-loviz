@@ -4,7 +4,8 @@ define([
     'underscore',
     'backbone',
     'storage',
-], function (_, Backbone,storage,Bloque_ajax) {
+    '../views/app/loader_full'
+], function (_, Backbone,storage,LoaderFull) {
     'use strict';
 
     var UserModel = Backbone.Model.extend({
@@ -34,36 +35,32 @@ define([
         },
         ingresar_user:function (email,pass,vista) {
             var self = this;
-            //var progrecion_bar = new Bloque_ajax();
-            //http://apiloviz.herokuapp.com/api-token-auth/
+            var loader = new LoaderFull();
             $.post("/login/",
                 {username: email,password:pass})
             .done(function(data){
                 if (data.id!==0) {
                     self.buscar_user();
                     if (vista.model.name==='pedido') {
-                        vista.loader.remove();                        
+                                                
                         vista.model.set({'paso_actual':2,'ajax':true});
                     }else{                        
                         Backbone.history.navigate('/usuario/perfil/', {trigger:true})
-                        vista.loader.remove();
                     }
                 }else{
                     vista.error_login();                       
                 }                
             }).fail(function(data){
-                vista.error_login();  
-                vista.loader.remove();
-
+                vista.error_login();
             }).always(function(){
-                
+                loader.remove();
             });
         },
         crear_user:function (email,pass,nombre,apellido,vista) {
             var self = this;
-            //var progrecion_bar = new ProgrecionBar();
             self.email = email;
             self.pass = pass;
+            var loader = new LoaderFull();
             $.post('http://localhost:8000/ajax/crear/',{username:email,password:pass,nombre:nombre,apellido:apellido})
             .done(function (data) {
                 if (data.creado===true) {
@@ -72,7 +69,7 @@ define([
             }).fail(function (data) {
                 vista.error_crear()
             }).always(function(){
-                //progrecion_bar.remove();
+                loader.remove();
             });
         }
     });

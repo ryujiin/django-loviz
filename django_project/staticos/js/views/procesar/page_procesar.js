@@ -68,10 +68,8 @@ define([
             if (locacion === '/procesar-compra/') {
                 if (this.model.id===undefined) {
                     var self = this;
-                    debugger;
                     var pedido_id = CarroModel.toJSON().pedido;
                     if (pedido_id) {
-                        debugger;
                         this.model.id= pedido_id;
                         this.model.fetch().done(function () {
                             self.model.set('ajax',false);
