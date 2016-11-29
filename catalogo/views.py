@@ -38,11 +38,11 @@ class CatalogoViewsets(viewsets.ReadOnlyModelViewSet):
 		return queryset
 
 
-from drf_haystack.viewsets import HaystackViewSet
-#aun no se usa la busqueda mas adelante derrepente
-class ProductoBusquedaView(HaystackViewSet):
-	index_models = [Producto]
-	serializer_class = ProductoBusquedaSerializer
+#from drf_haystack.viewsets import HaystackViewSet
+##aun no se usa la busqueda mas adelante derrepente
+#class ProductoBusquedaView(HaystackViewSet):
+	#index_models = [Producto]
+	#serializer_class = ProductoBusquedaSerializer
 
 
 class CategoriaViewsets(viewsets.ReadOnlyModelViewSet):
