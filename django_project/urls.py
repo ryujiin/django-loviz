@@ -5,7 +5,7 @@ import settings
 
 from rest_framework.routers import DefaultRouter
 
-from catalogo.views import CatalogoViewsets,CategoriaViewsets,ProductoBusquedaView
+from catalogo.views import CatalogoViewsets,CategoriaViewsets
 from cmsweb.views import *
 from carro.views import LineasViewsets,CarroViewsets
 from cliente.views import salir,nuevo_usuario,ingresar,DireccionViewsets,ComentarioViewSet,ComentarioImagenViewSet
@@ -16,7 +16,6 @@ from utiles.views import ColorViewsets,TallasViewsets
 
 router = DefaultRouter()
 router.register(r'productos', CatalogoViewsets,'productos')
-router.register(r'productos/busqueda', ProductoBusquedaView,'busqueda')
 router.register(r'categoria', CategoriaViewsets,'categorias')
 router.register(r'cms/paginas', PaginaViewsets,'paginas')
 router.register(r'carro/lineas', LineasViewsets,'lineas')
