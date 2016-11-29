@@ -35,7 +35,7 @@ class Carro(models.Model):
 	
 	def __unicode__(self):
 		propietario = slugify(self.propietario)
-		return "Carro de %s - %s" %(propietario,self.estado)
+		return "%s_Carro de %s - %s" %(self.id,propietario,self.estado)
 
 	def all_lineas(self):
 		return LineaCarro.objects.filter(carro=self)

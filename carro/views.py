@@ -21,8 +21,7 @@ class CarritoViewsApi(APIView):
 			carro_fijo = self.request.GET.get('c_f')
 			if carro_fijo:
 				carro = Carro.objects.get(pk=carro_fijo,estado="Abierto")
-				carro.propietario = self.request.user				
-				#obtengo_carro_antiguo				
+				carro.propietario = self.request.user								
 				carro.save()				
 				return carro
 			else:				
@@ -82,6 +81,25 @@ class LineasViewsets(viewsets.ModelViewSet):
 		queryset = LineaCarro.objects.filter(carro=carro,activo=True)
 		serializer = LineaSerializer(queryset,many=True)
 		return Response(serializer.data)
+
+	def create(self,request):
+		perfecto = False
+		carro_session = request.COOKIES.get('session')
+		carro = request.data['carro']
+		carro_server = Carro.objects.get(pk=carro)
+		if carro_server.propietario:
+			if self.request.user.is_authenticated():
+				if self.request.user == carro_server.propietario:
+					perfecto = True
+		elif carro_server.session == carro_session:
+			perfecto = True
+		serializer = LineaSerializer(data=request.data)		
+		if perfecto:
+			if serializer.is_valid():
+				serializer.save()
+				return Response (serializer.data)
+			return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+		return Response({"message": "errores"},status=status.HTTP_400_BAD_REQUEST)
 
 class CarroViewsets(viewsets.ModelViewSet):
 	permission_classes = (IsAuthenticated,)

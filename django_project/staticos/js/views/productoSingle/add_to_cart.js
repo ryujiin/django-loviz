@@ -6,10 +6,10 @@ define([
     'backbone',
     'swig',
     'carro_main',
-    '../../models/linea'
+    '../../models/linea',
     //'../../views/app/loader_full',
-    //'../../views/productosingle/minicompra',    
-], function ($, _, Backbone, swig,CarroModel,LineaModel) {
+    '../../views/productoSingle/minicompra',
+], function ($, _, Backbone, swig,CarroModel,LineaModel,MiniCompra) {
     'use strict';
 
     var AddToCartView = Backbone.View.extend({
@@ -52,9 +52,9 @@ define([
                 this.model.save().done(function (data) { 
                     CarroModel.fetch();
                     vista.render();
+                    self.crearMinicompra();
                 });
             }else{
-                debugger;
             }
             //var self = this;
             //var loader = new LoaderFull();
@@ -69,13 +69,13 @@ define([
                 //});
             //};
         },
-        //crearMinicompra:function () {
-            //var minicompra = new MiniCompra({
-                //model:this.model,
-                //el:$('#mini_compra')
-            //})
-            //minicompra.mostrar();
-        //}
+        crearMinicompra:function () {
+            var minicompra = new MiniCompra({
+                model:this.model,
+                el:$('#mini_compra')
+            })
+            minicompra.mostrar();
+        }
 
     });
 
