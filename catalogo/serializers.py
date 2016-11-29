@@ -167,13 +167,13 @@ class ProductoSingleSereializer(serializers.ModelSerializer):
 		return Comentario.objects.filter(producto=obj.id).count()
 
 #Serializer de busqueda
-from drf_haystack.serializers import HaystackSerializer
-from search_indexes import ProductoIndex
+#from drf_haystack.serializers import HaystackSerializer
+#from search_indexes import ProductoIndex
 
-class ProductoBusquedaSerializer(HaystackSerializer):
-	class Meta:
-		index_classes = [ProductoIndex]
-		fields = ["text", "nombre", "categorias", "autocomplete"]
+#class ProductoBusquedaSerializer(HaystackSerializer):
+	#class Meta:
+		#index_classes = [ProductoIndex]
+		#fields = ["text", "nombre", "categorias", "autocomplete"]
 
 
 #Serializador Oficina
